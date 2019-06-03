@@ -1,10 +1,15 @@
 import speech_recognition as sr
 from langdetect import detect
 
+import view
+
+win = view.Viewer()
+win.start()
+
 r = sr.Recognizer()
 print("Speak now!")
 
-# with sr.WavFile("F:\\PyCharmProjects\\Voice\\test4.wav") as source:
+# with sr.WavFile("D:\\PyCharmProjects\\Voice\\test2.wav") as source:
 #     audio = r.listen(source)
 
 with sr.Microphone() as source:
