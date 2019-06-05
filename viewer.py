@@ -10,6 +10,7 @@ import sys
 from tkinter import filedialog
 from scipy.fftpack import fft
 from scipy.io import wavfile
+import os
 
 
 
@@ -78,21 +79,16 @@ class Viewer:
 
     def saveSoundToFile(self):
 
-        path = self.pathLabel.get("1.0", END)
-        copyfile("/home/adam/Desktop/Voice/Voice/venv/Lib/recorded", "/home/adam/Desktop/Voice/Voice/"+path)
+        rate, data=wavfile.read("/home/adam/Desktop/Voice/Voice/venv/Lib/recorded")
+        f=filedialog.asksaveasfilename(defaultextension='.wav', initialdir="/home/adam/Desktop/Voice/Voice")
+        wavfile.write(f, rate, data)
+
 
     def createSoundChart(self):
 
-        spf=wave.open("/home/adam/Desktop/Voice/Voice/venv/Lib/recorded", 'r')
-        signal = spf.readframes(-1)
-        signal = np.fromstring(signal, 'Int16')
-
-        if spf.getnchannels() == 2:
-            print("Just mono files")
-            sys.exit()
         plt.close('all')
-        plt.figure(1)
-        plt.plot(signal)
+        rate, data= wavfile.read("/home/adam/Desktop/Voice/Voice/venv/Lib/recorded")
+        plt.plot(data)
         plt.savefig("/home/adam/Desktop/Voice/Voice/plot.png")
         image = PhotoImage(file="/home/adam/Desktop/Voice/Voice/plot.png")
         imageGUI = Toplevel()
